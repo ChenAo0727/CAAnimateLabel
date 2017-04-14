@@ -164,9 +164,6 @@
 
     CGFloat scale = [CAAnimateUtil easeOutWithStartValue:5 endValue:1 progress:textAttribute.progress];
     CGFloat alpha = [CAAnimateUtil easeOutWithStartValue:0 endValue:1 progress:textAttribute.progress];
-//    if (alpha < 0.01) {
-//        return;
-//    }
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     CGFloat flyDirectionOffset = (1 - textAttribute.progress) * textAttribute.font.pointSize * 2;
@@ -257,7 +254,6 @@
 - (void)dashAnimationWithTextAttribute:(CATextAttribute *)textAttribute {
     if (self.type != CAAnimateLabelDashType) {
         self.type = CAAnimateLabelDashType;
-        return;
     }
     CGFloat realProgress = ([CAAnimateUtil easeOutWithStartValue:0 endValue:1 progress:textAttribute.progress < 0.5 ? textAttribute.progress * 2 : 1]);
     
@@ -295,7 +291,6 @@
     
     if (self.type != CAAnimateLabelSpinType) {
         self.type = CAAnimateLabelSpinType;
-        return;
     }
     CGFloat progress = M_PI / 2 * ([CAAnimateUtil easeOutBackStartValue:1 endValue:0 progress:textAttribute.progress]);
     

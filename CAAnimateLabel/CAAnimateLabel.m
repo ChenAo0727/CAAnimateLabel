@@ -421,7 +421,6 @@
         return textAttr.rect;
     }else if (type == CAAnimateLabelFallType) {
         CGRect rect = textAttr.rect;
-//        return CGRectMake(rect.origin.x - textAttr.font.pointSize / 2,rect.origin.y - textAttr.font.pointSize * 5, rect.size.width + textAttr.font.pointSize, rect.size.height + textAttr.font.pointSize * 5);
         return CGRectMake(0, rect.origin.y - textAttr.font.pointSize * 5, CGRectGetWidth(self.frame), rect.size.height + textAttr.font.pointSize * 5);
     }else if (type == CAAnimateLabelFlewType) {
         CGRect attrRect = textAttr.rect;
