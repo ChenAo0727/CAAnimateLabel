@@ -210,7 +210,9 @@
 - (void)_updateText {
     [_textLayout cleanTextAttrsbute];
     if (!_attributedText) {
-        NSAssert(_text, @"CAAnimateLabel's text cann't be nil");
+        if (!_text) {
+            return;
+        }
         NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
         style.lineSpacing = _lineSpacing;
         _attributedText = [[NSAttributedString alloc] initWithString:_text attributes:@{NSFontAttributeName : _font,NSForegroundColorAttributeName:_textColor,NSParagraphStyleAttributeName:style}];

@@ -35,7 +35,6 @@
 }
 
 - (void)initAnimateLabel {
-    self.animateLabel.text = @"青春，是人生中最美的风景。\n青春，是一场花开的遇见；\n青春，是一场痛并快乐着的旅行；\n青春，是一场轰轰烈烈的比赛；\n青春，是一场鲜衣奴马的争荣岁月；\n青春，是一场风花雪月的光阴。";
     self.animateLabel.type = self.animateType;
     if (self.animateType == CAAnimateLabelCustomType) {
         self.animateLabel.delayAfterComplete = YES;
@@ -48,6 +47,7 @@
     self.animateLabel.duration = 3.0;
     self.animateLabel.delay = 0.5;
     self.animateLabel.repeatCount = 1;
+    self.animateLabel.text = @"青春，是人生中最美的风景。\n青春，是一场花开的遇见；\n青春，是一场痛并快乐着的旅行；\n青春，是一场轰轰烈烈的比赛；\n青春，是一场鲜衣奴马的争荣岁月；\n青春，是一场风花雪月的光阴。";
     self.animateLabel.contentInsets = UIEdgeInsetsMake(100, 10, 10, 10);
     if (self.animateType == CAAnimateLabelCustomType) {
         self.animateLabel.delegate = self;
