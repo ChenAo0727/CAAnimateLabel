@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.public_header_files = "CAAnimateLabel/**/*.h"
 
   # s.resource  = "icon.png"
-  # s.resources = "Resources/*.gif"
+   s.resources = "Resources/*.gif"
 
    s.frameworks = "CoreText"
    s.requires_arc = true

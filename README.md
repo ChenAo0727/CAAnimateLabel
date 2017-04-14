@@ -10,6 +10,15 @@ A label can animate and quick custom animation
 # custom animation
 ![image](./Resources/SpringView.gif)
 
+## Installation
+
+### [CocoaPods](http://cocoapods.org)
+
+1. Install the latest release of CocoaPods: `gem install cocoapods`
+2. Add to your Podfile: `pod 'CAAnimateLabel'`
+3. Install the pod: `pod install`
+
+
 
 # Demo
 
