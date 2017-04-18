@@ -36,9 +36,7 @@
 
 - (void)initAnimateLabel {
     self.animateLabel.type = self.animateType;
-    if (self.animateType == CAAnimateLabelCustomType) {
-        self.animateLabel.delayAfterComplete = YES;
-    }
+    
     self.animateLabel.layoutType = CATextLayoutSentenceType;
     self.animateLabel.lineSpacing = 10;
     self.animateLabel.textColor = [UIColor greenColor];
@@ -135,31 +133,61 @@
     NSLog(@"%@ did end animation at index %ld",textAttribute.text,index);
 }
 
-- (void)animationAtRect:(CGRect)rect textAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index {
-    CGRect drawRect ;
-    NSInteger i = index % 6;
-    if (i == 0) {
+- (CGRect)animationDrawRectForTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index {
+    
+    if (textAttribute.lineIndex == 0) {
+        
+        return [self.animateLabel drawRect:self.animateLabel.bounds animationType:CAAnimateLabelZoomType textAttribute:textAttribute];
+        
+    }else if (textAttribute.lineIndex == 1) {
+        
+        return [self.animateLabel drawRect:self.animateLabel.bounds animationType:CAAnimateLabelFallType textAttribute:textAttribute];
+        
+    }else if (textAttribute.lineIndex == 2) {
+        
+       return [self.animateLabel drawRect:self.animateLabel.bounds animationType:CAAnimateLabelThrowType textAttribute:textAttribute];
+        
+    } else if (textAttribute.lineIndex == 3) {
+        
+        return [self.animateLabel drawRect:self.animateLabel.bounds animationType:CAAnimateLabelRevealType textAttribute:textAttribute];
+        
+    }else if (textAttribute.lineIndex == 4) {
+        
+        return [self.animateLabel drawRect:self.animateLabel.bounds animationType:CAAnimateLabelAlphaType textAttribute:textAttribute];
+        
+    }else if (textAttribute.lineIndex == 5) {
+        
+        return [self.animateLabel drawRect:self.animateLabel.bounds animationType:CAAnimateLabelSpringType textAttribute:textAttribute];
+    }
+    return textAttribute.rect;
+}
+
+- (void)animationAtRect:(CGRect)rect ForTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index {
+    
+    
+    if (textAttribute.lineIndex == 0) {
        
-       drawRect = [self.animateLabel drawRect:rect animationType:CAAnimateLabelZoomType textAttribute:textAttribute];
-        [self.animateLabel zoomAnimationRect:drawRect textAttribute:textAttribute];
-    }else if (i == 1) {
-        drawRect = [self.animateLabel drawRect:rect animationType:CAAnimateLabelFallType textAttribute:textAttribute];
-        [self.animateLabel fallAnimationRect:drawRect textAttribute:textAttribute];
-    }else if (i == 2) {
-        drawRect = [self.animateLabel drawRect:rect animationType:CAAnimateLabelRevealType textAttribute:textAttribute];
-        [self.animateLabel revealAnimationRect:drawRect textAttribute:textAttribute];
+        [self.animateLabel zoomAnimationRect:rect textAttribute:textAttribute];
+        
+    }else if (textAttribute.lineIndex == 1) {
+        
+        [self.animateLabel fallAnimationRect:rect textAttribute:textAttribute];
+        
+    }else if (textAttribute.lineIndex == 2) {
+        
+       [self.animateLabel throwAnimationRect:rect textAttribute:textAttribute];
 
-    }else if (i == 3) {
-        drawRect = [self.animateLabel drawRect:rect animationType:CAAnimateLabelThrowType textAttribute:textAttribute];
-        [self.animateLabel throwAnimationRect:drawRect textAttribute:textAttribute];
+    } else if (textAttribute.lineIndex == 3) {
 
-    }else if (i == 4) {
-        drawRect = [self.animateLabel drawRect:rect animationType:CAAnimateLabelAlphaType textAttribute:textAttribute];
-        [self.animateLabel alphaAnimationRect:drawRect textAttribute:textAttribute];
+        [self.animateLabel revealAnimationRect:rect textAttribute:textAttribute];
 
-    }else if (i == 5) {
-        drawRect = [self.animateLabel drawRect:rect animationType:CAAnimateLabelSpringType textAttribute:textAttribute];
-        [self.animateLabel springAnimationRect:drawRect textAttribute:textAttribute];
+    }else if (textAttribute.lineIndex == 4) {
+
+        [self.animateLabel alphaAnimationRect:rect textAttribute:textAttribute];
+
+    }else if (textAttribute.lineIndex == 5) {
+
+        [self.animateLabel springAnimationRect:rect textAttribute:textAttribute];
     }
 
 }

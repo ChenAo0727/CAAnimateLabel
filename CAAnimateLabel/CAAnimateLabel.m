@@ -19,6 +19,7 @@
     NSInteger _animationCount;
     NSMutableArray *_animatedAttribute;
     NSMutableArray *_completeAnimateAttribute;
+    CAAnimateLabelType _initialType;
 }
 
 @end
@@ -87,8 +88,12 @@
     _type = type;
     
     if (type == CAAnimateLabelDashType || type == CAAnimateLabelSpinType) {
-        self.layerAnimate = YES;
         _textLayout.layerAnimate = YES;
+        self.layerAnimate = YES;
+        
+    }else {
+        _textLayout.layerAnimate = NO;
+        self.layerAnimate = NO;
     }
     if (!UIEdgeInsetsEqualToEdgeInsets(_contentInsets, UIEdgeInsetsZero)) {
         //force not change
@@ -133,7 +138,7 @@
 }
 
 - (void)setTextColor:(UIColor *)textColor {
-    
+    [self removeAllTextLayer];
     NSAssert(textColor != nil, @"CAAnimateLabel's textColor cann't be nil");
     _textColor = textColor;
     if (_attributedText) {
@@ -146,6 +151,7 @@
 
 - (void)setFont:(UIFont *)font {
     
+    [self removeAllTextLayer];
     NSAssert(font != nil, @"CAAnimateLabel's font cann't be nil");
     _font = font;
     if (_attributedText) {
@@ -157,7 +163,7 @@
 }
 
 - (void)setLineSpacing:(CGFloat)lineSpacing {
-    
+    [self removeAllTextLayer];
     NSAssert(lineSpacing >= 0, @"lineSpacing cann't less then zero");
     _lineSpacing = lineSpacing;
     if (_attributedText) {
@@ -246,7 +252,9 @@
 }
 
 - (void)preTextAttributes {
-    
+    if (!self.layerAnimate || (self.type != CAAnimateLabelSpinType && self.type != CAAnimateLabelDashType)) {
+        return;
+    }
     [_textLayout.textAttrs enumerateObjectsUsingBlock:^(CATextAttribute * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         if (self.type == CAAnimateLabelDashType) {
@@ -275,9 +283,7 @@
             [CATransaction commit];
 
         }
-        if (self.layerAnimate) {
             [self.layer addSublayer:obj.layer];
-        }
     }];
 
 }
@@ -321,6 +327,7 @@
     }
     
     if (_link.paused) {
+        self.type = _initialType;
         return;
     }
     
@@ -339,6 +346,9 @@
         }
         if (_animationCount == self.repeatCount) {
             _link.paused = YES;
+            if (_type != _initialType) {
+                _type = _initialType;
+            };
             _restore = YES;
             if (!self.layerAnimate ) {
                 
@@ -357,14 +367,24 @@
         }
         
         obj.progress = MAX(0, MIN(1, timePass / _duration));
+        
         if (obj.progress == 1) {
             obj.complete = YES;
         }
-
+        if (obj.progress == 1) {
+            return ;
+        }
+        
         if (self.layerAnimate) {
             [self layerAnimateWithTextAttribute:obj forIndex:idx];
         }else {
-            CGRect drawRect = [self drawRect:self.bounds ForAttribute:obj];
+            CGRect drawRect;
+            if (self.delegate && [self.delegate respondsToSelector:@selector(animationDrawRectForTextAttribute:forIndex:)]) {
+                
+                drawRect = [self.delegate animationDrawRectForTextAttribute:obj forIndex:idx];
+            }else {
+                drawRect = [self drawRect:self.bounds ForAttribute:obj];
+            }
             [self setNeedsDisplayInRect:drawRect];
         }
     }];
@@ -372,6 +392,7 @@
 
 #pragma mark - Animation
 - (void)startAnimation {
+    [self removeAllTextLayer];
     [self resetAnimation];
     [self _updateText];
     [self setNeedsDisplay];
@@ -387,6 +408,9 @@
 }
 
 - (void)resetAnimation {
+    if (_animationCount == 0) {
+        _initialType = self.type;
+    }
     _link.paused = YES;
     [_animatedAttribute removeAllObjects];
     [_completeAnimateAttribute removeAllObjects];
@@ -403,7 +427,7 @@
                 [obj.attrString drawInRect:obj.rect];
             }
         }else {
-            [self drawInRect:obj.rect withTextAttribute:obj forIndex:idx];
+            [self drawInRect:rect withTextAttribute:obj forIndex:idx];
         
         }
     }];
@@ -430,11 +454,9 @@
         rect.origin.y -= CGRectGetHeight(rect) / 2;
         rect.size.height += CGRectGetHeight(rect);
         return rect;
-    }else if (type == CAAnimateLabelThrowType) {
-        CGRect rect = textAttr.rect;
-        rect.origin.y -= CGRectGetHeight(rect) / 2;
-        rect.size.height += CGRectGetHeight(rect);
-        return rect;
+    } else if (type == CAAnimateLabelThrowType) {
+        
+        return CGRectMake(0, 0, CGRectGetMaxX(textAttr.rect), CGRectGetMaxY(textAttr.rect));
     }
 
     return  textAttr.rect;
@@ -446,8 +468,8 @@
         return;
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(animationAtRect:textAttribute:forIndex:)]) {
-        [self.delegate animationAtRect:rect textAttribute:attrText forIndex:index];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(animationAtRect:ForTextAttribute:forIndex:)]) {
+        [self.delegate animationAtRect:rect ForTextAttribute:attrText forIndex:index];
         return;
     }
     
@@ -487,8 +509,8 @@
     if (textAttribute.progress <= 0 ) {
         return;
     }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(animationAtRect:textAttribute:forIndex:)]) {
-        [self.delegate animationAtRect:textAttribute.rect textAttribute:textAttribute forIndex:index];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(animationAtRect:ForTextAttribute:forIndex:)]) {
+        [self.delegate animationAtRect:textAttribute.rect ForTextAttribute:textAttribute forIndex:index];
         return;
     }
     if (self.type == CAAnimateLabelDashType) {

@@ -98,7 +98,7 @@ If Yes, set the delay time between last textAttribute complete and next textAttr
 
 - (void)startAnimation;
 - (void)stopAnimationRestore:(BOOL)restore;
-
+- (void)removeAllTextLayer;
 @end
 
 
@@ -106,7 +106,8 @@ If Yes, set the delay time between last textAttribute complete and next textAttr
 
 - (void)animationWillStartTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
 - (void)animationDidEndTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
-- (void)animationAtRect:(CGRect)rect textAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
+- (CGRect)animationDrawRectForTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
+- (void)animationAtRect:(CGRect)rect ForTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

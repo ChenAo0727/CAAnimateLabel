@@ -19,8 +19,9 @@
 }
 
 - (void)drawInContext:(CGContextRef)ctx {
-    
+
     UIGraphicsPushContext(ctx);
+    CGContextSaveGState(ctx);
     [self.attrStr drawInRect:self.bounds];
     UIGraphicsPopContext();
 }

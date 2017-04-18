@@ -227,7 +227,7 @@
     }];
     
     if (self.layerAnimate) {
-        
+    
         [self.textAttrs enumerateObjectsUsingBlock:^(CATextAttribute * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
             CATextAttributeLayer *layer =  obj.layer;

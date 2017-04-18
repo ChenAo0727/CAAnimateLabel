@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "CAAnimateLabel"
-  s.version      = "1.1.0"
+  s.version      = "1.2.0"
   s.summary      = "A label can animate and quick custom animation"
 
   s.homepage     = "https://github.com/ChenAo0727/CAAnimateLabel"
@@ -23,9 +23,8 @@ Pod::Spec.new do |s|
   s.source_files  = "CAAnimateLabel/**/*.{h,m}"
   s.public_header_files = "CAAnimateLabel/**/*.h"
 
-  # s.resource  = "icon.png"
-   s.resources = "Resources/*.gif"
+  s.resources = "Resources/*.gif"
 
-   s.frameworks = "CoreText"
-   s.requires_arc = true
+  s.frameworks = "CoreText"
+  s.requires_arc = true
 end

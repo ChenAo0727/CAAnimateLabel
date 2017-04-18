@@ -116,23 +116,19 @@
 
 #pragma mark - draw animation
 - (void)zoomAnimationRect:(CGRect)rect textAttribute:(CATextAttribute *)textAttribute {
-    if (self.layerAnimate) {
-        self.layerAnimate = NO;
-    }
+
     CGFloat percent = [CAAnimateUtil bounceWithStartValue:0 endValue:1 stiffness:0.01 numberOfBounces:1 progress:textAttribute.progress shake:NO shouldOvershoot:NO];
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
-    CGContextTranslateCTM(context, CGRectGetMidX(rect), CGRectGetMidY(rect));
+    CGContextTranslateCTM(context, CGRectGetMidX(textAttribute.rect), CGRectGetMidY(textAttribute.rect));
     CGContextScaleCTM(context, percent, percent);
-    CGRect drawRect = CGRectMake(- CGRectGetWidth(rect) / 2, - CGRectGetHeight(rect) / 2, CGRectGetWidth(rect), CGRectGetHeight(rect));
+    CGRect drawRect = CGRectMake(- CGRectGetWidth(textAttribute.rect) / 2, - CGRectGetHeight(textAttribute.rect) / 2, CGRectGetWidth(textAttribute.rect), CGRectGetHeight(textAttribute.rect));
     [textAttribute.attrString drawInRect:drawRect];
     CGContextRestoreGState(context);
 }
 
 - (void)fallAnimationRect:(CGRect)rect textAttribute:(CATextAttribute *)textAttribute {
-    if (self.layerAnimate) {
-        self.layerAnimate = NO;
-    }
+
     CGFloat percent = [CAAnimateUtil bounceWithStartValue:CGRectGetMaxY(textAttribute.rect) - textAttribute.font.pointSize * 3 endValue:CGRectGetMaxY(textAttribute.rect) stiffness:0.01 numberOfBounces:1 progress:textAttribute.progress shake:NO shouldOvershoot:NO];
 
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -149,7 +145,7 @@
     }
     CGContextRotateCTM(context, rotateValue);
     
-    CGRect newRect = CGRectMake(- CGRectGetWidth(textAttribute.rect) / 2, - CGRectGetHeight(textAttribute.rect), CGRectGetWidth(self.frame), CGRectGetHeight(textAttribute.rect));
+    CGRect newRect = CGRectMake(- CGRectGetWidth(textAttribute.rect) / 2, - CGRectGetHeight(textAttribute.rect), CGRectGetWidth(self.frame), CGRectGetHeight(textAttribute.rect) );
     
     [textAttribute.attrString drawInRect:newRect];
     CGContextRestoreGState(context);
@@ -158,12 +154,10 @@
 
 
 - (void)flewAnimationRect:(CGRect)rect textAttribute:(CATextAttribute *)textAttribute {
-    if (self.layerAnimate) {
-        self.layerAnimate = NO;
-    }
 
     CGFloat scale = [CAAnimateUtil easeOutWithStartValue:5 endValue:1 progress:textAttribute.progress];
     CGFloat alpha = [CAAnimateUtil easeOutWithStartValue:0 endValue:1 progress:textAttribute.progress];
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     CGFloat flyDirectionOffset = (1 - textAttribute.progress) * textAttribute.font.pointSize * 2;
@@ -177,9 +171,6 @@
 }
 
 - (void)alphaAnimationRect:(CGRect)rect textAttribute:(CATextAttribute *)textAttribute {
-    if (self.layerAnimate) {
-        self.layerAnimate = NO;
-    }
 
     CGFloat alpha = [CAAnimateUtil easeOutWithStartValue:0 endValue:1 progress:textAttribute.progress];
     if (alpha < 0.01) {
@@ -194,9 +185,6 @@
 }
 
 - (void)springAnimationRect:(CGRect)rect textAttribute:(CATextAttribute *)textAttribute {
-    if (self.layerAnimate) {
-        self.layerAnimate = NO;
-    }
 
     CGFloat progress = [CAAnimateUtil bounceWithStartValue:0 endValue:1 stiffness:0.1 numberOfBounces:3 progress:textAttribute.progress shake:YES shouldOvershoot:YES];
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -210,10 +198,7 @@
 }
 
 - (void)revealAnimationRect:(CGRect)rect textAttribute:(CATextAttribute *)textAttribute {
-    if (self.layerAnimate) {
-        self.layerAnimate = NO;
-    }
-
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
@@ -223,38 +208,39 @@
     
     CGFloat radius = [CAAnimateUtil easeOutWithStartValue:0 endValue:maxRadius progress:textAttribute.progress];
     
-    CGFloat centerX = CGRectGetMidX(rect);
-    CGFloat centerY = CGRectGetMidY(rect);
+    CGFloat centerX = CGRectGetMidX(textAttribute.rect);
+    CGFloat centerY = CGRectGetMidY(textAttribute.rect);
     
     CGContextAddEllipseInRect(context, CGRectMake(centerX - radius, centerY - radius, 2 * radius, 2 * radius));
     CGContextEOClip(context);
     
+    
     [textAttribute.attrString drawInRect:textAttribute.rect];
+    
     CGContextRestoreGState(context);
 
 }
 
 - (void)throwAnimationRect:(CGRect)rect textAttribute:(CATextAttribute *)textAttribute {
-    if (self.layerAnimate) {
-        self.layerAnimate = NO;
-    }
 
     CGFloat progress = [CAAnimateUtil bounceWithStartValue:0 endValue:1 stiffness:0.01 numberOfBounces:1 progress:textAttribute.progress shake:NO shouldOvershoot:NO];
+    if (progress < 0.01) {
+        return;
+    }
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
 
-    CGContextScaleCTM(context, 0.5 + 0.5 * progress, 0.5 + 0.5 * progress);
+    CGContextScaleCTM(context, 0.2 + 0.8 * progress, 0.2 + 0.8 * progress);
 
     textAttribute.textColor = [textAttribute.textColor colorWithAlphaComponent:progress];
+    
     [textAttribute.attrString drawInRect:textAttribute.rect];
     CGContextRestoreGState(context);
 }
 
 #pragma mark - layer animation
 - (void)dashAnimationWithTextAttribute:(CATextAttribute *)textAttribute {
-    if (self.type != CAAnimateLabelDashType) {
-        self.type = CAAnimateLabelDashType;
-    }
+
     CGFloat realProgress = ([CAAnimateUtil easeOutWithStartValue:0 endValue:1 progress:textAttribute.progress < 0.5 ? textAttribute.progress * 2 : 1]);
     
     [CATransaction begin];
@@ -289,9 +275,6 @@
 
 - (void)spinAnimationWithTextAttribute:(CATextAttribute *)textAttribute {
     
-    if (self.type != CAAnimateLabelSpinType) {
-        self.type = CAAnimateLabelSpinType;
-    }
     CGFloat progress = M_PI / 2 * ([CAAnimateUtil easeOutBackStartValue:1 endValue:0 progress:textAttribute.progress]);
     
     [CATransaction begin];
