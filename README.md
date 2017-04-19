@@ -50,14 +50,12 @@ A label can animate and quick custom animation
 
  ```
  gem install cocoapods
- 
  ```
  
 2.Add to your Podfile: 
 
 ```
 pod 'CAAnimateLabel'
-
 ```
 
 3.Install the pod:
@@ -65,8 +63,6 @@ pod 'CAAnimateLabel'
  ```
  pod install
  ```
-
-
 
 # Usage
 
