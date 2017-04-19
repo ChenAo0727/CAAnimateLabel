@@ -77,7 +77,15 @@
     return _textLayout;
 }
 
+- (BOOL)animating {
+    return !_link.paused;
+}
+
 #pragma mark - setter 
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    [self _updateText];
+}
 
 - (void)setDelayAfterComplete:(BOOL)delayAfterComplete {
     _delayAfterComplete = delayAfterComplete;
@@ -107,10 +115,12 @@
 - (void)setDelegate:(id<CAAnimateLabelDelegate>)delegate {
     _delegate = delegate;
     _type = CAAnimateLabelCustomType;
+    [self _updateText];
 }
 
 - (void)setLayerAnimate:(BOOL)layerAnimate {
     _layerAnimate = layerAnimate;
+    _textLayout.layerAnimate = layerAnimate;
     [self _updateText];
 }
 
@@ -252,12 +262,18 @@
 }
 
 - (void)preTextAttributes {
-    if (!self.layerAnimate || (self.type != CAAnimateLabelSpinType && self.type != CAAnimateLabelDashType)) {
+    if (!self.layerAnimate) {
         return;
     }
     [_textLayout.textAttrs enumerateObjectsUsingBlock:^(CATextAttribute * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(prepareLayerByTextAttribute:forIndex:)]) {
+            [self.delegate prepareLayerByTextAttribute:obj forIndex:idx];
+        }else {
+
         if (self.type == CAAnimateLabelDashType) {
+            
             CATextAttributeLayer *layer = obj.layer;
             [CATransaction begin];
             [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
@@ -283,6 +299,7 @@
             [CATransaction commit];
 
         }
+        }
             [self.layer addSublayer:obj.layer];
     }];
 
@@ -301,7 +318,9 @@
 
 #pragma mark - CADisplayLink
 - (void)display:(CADisplayLink *)link {
-
+    if (_link.paused) {
+        return;
+    }
     _timestamp = link.timestamp;
     _passTime += link.duration;
     
@@ -338,7 +357,8 @@
         if (self.layerAnimate) {
             
             if (self.repeatCount != _animationCount) {
-                [self preTextAttributes];
+                [self removeAllTextLayer];
+                [self _updateText];
             }
             
         } else {
@@ -349,10 +369,14 @@
             if (_type != _initialType) {
                 _type = _initialType;
             };
-            _restore = YES;
+            
             if (!self.layerAnimate ) {
                 
                 [self setNeedsDisplay];
+            }else {
+                if (!_restore) {
+                    [self removeAllTextLayer];
+                }
             }
             return;
         }
@@ -371,10 +395,12 @@
         if (obj.progress == 1) {
             obj.complete = YES;
         }
-        if (obj.progress == 1) {
+        if (obj.progress == 1 || obj.progress == 0) {
             return ;
         }
-        
+        if (_link.paused) {
+            return;
+        }
         if (self.layerAnimate) {
             [self layerAnimateWithTextAttribute:obj forIndex:idx];
         }else {
@@ -392,7 +418,9 @@
 
 #pragma mark - Animation
 - (void)startAnimation {
-    [self removeAllTextLayer];
+    if (!self.layerAnimate) {
+        [self removeAllTextLayer];
+    }
     [self resetAnimation];
     [self _updateText];
     [self setNeedsDisplay];
@@ -403,15 +431,18 @@
     [self resetAnimation];
     _restore = restore;
     if (restore) {
+        if (self.layerAnimate) {
+            [self removeAllTextLayer];
+        }
         [self setNeedsDisplay];
     }
 }
 
 - (void)resetAnimation {
+    _link.paused = YES;
     if (_animationCount == 0) {
         _initialType = self.type;
     }
-    _link.paused = YES;
     [_animatedAttribute removeAllObjects];
     [_completeAnimateAttribute removeAllObjects];
     _passTime = 0;
@@ -424,7 +455,7 @@
     [_textLayout.textAttrs enumerateObjectsUsingBlock:^(CATextAttribute * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (_link.isPaused) {
             if (_restore) {
-                [obj.attrString drawInRect:obj.rect];
+                [obj.initialAttrString drawInRect:obj.rect];
             }
         }else {
             [self drawInRect:rect withTextAttribute:obj forIndex:idx];
@@ -509,6 +540,7 @@
     if (textAttribute.progress <= 0 ) {
         return;
     }
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(animationAtRect:ForTextAttribute:forIndex:)]) {
         [self.delegate animationAtRect:textAttribute.rect ForTextAttribute:textAttribute forIndex:index];
         return;

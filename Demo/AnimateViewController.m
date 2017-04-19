@@ -34,6 +34,13 @@
     [self initAnimateLabel];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (self.animateLabel.animating) {
+        [self.animateLabel stopAnimationRestore:YES];
+    }
+}
+
 - (void)initAnimateLabel {
     self.animateLabel.type = self.animateType;
     
@@ -44,11 +51,13 @@
     self.animateLabel.font = [UIFont systemFontOfSize:18.0];
     self.animateLabel.duration = 3.0;
     self.animateLabel.delay = 0.5;
-    self.animateLabel.repeatCount = 1;
+    self.animateLabel.repeatCount = 2;
     self.animateLabel.text = @"青春，是人生中最美的风景。\n青春，是一场花开的遇见；\n青春，是一场痛并快乐着的旅行；\n青春，是一场轰轰烈烈的比赛；\n青春，是一场鲜衣奴马的争荣岁月；\n青春，是一场风花雪月的光阴。";
     self.animateLabel.contentInsets = UIEdgeInsetsMake(100, 10, 10, 10);
     if (self.animateType == CAAnimateLabelCustomType) {
+        self.animateLabel.layerAnimate = YES;
         self.animateLabel.delegate = self;
+        self.animateLabel.restore = NO;
     }
 
     /**
@@ -101,6 +110,9 @@
 }
 
 - (IBAction)startAnimation:(id)sender {
+    if (self.animateLabel.type == CAAnimateLabelCustomType) {
+        self.animateLabel.layerAnimate = !self.animateLabel.layerAnimate;
+    }
     [self.animateLabel startAnimation];
 }
 
@@ -133,8 +145,37 @@
     NSLog(@"%@ did end animation at index %ld",textAttribute.text,index);
 }
 
+- (void)prepareLayerByTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index {
+        //Layer Animation
+    if (textAttribute.lineIndex % 2 == 1) {
+        CATextAttributeLayer *layer = textAttribute.layer;
+        [CATransaction begin];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+        layer.backgroundColor = [UIColor clearColor].CGColor;
+        [layer setNeedsDisplay];
+        layer.opacity = 0;
+        layer.anchorPoint = CGPointMake(0, 0);
+        layer.position = CGPointMake(self.animateLabel.bounds.size.width, textAttribute.layer.position.y);
+        [CATransaction commit];
+
+    }else {
+        CATextAttributeLayer *layer = textAttribute.layer;
+        
+        [CATransaction begin];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+        
+        layer.backgroundColor = [UIColor clearColor].CGColor;
+        layer.transform = CATransform3DMakeRotation((M_PI / 2), 0, 1, 0);
+        [layer setNeedsDisplay];
+        layer.anchorPoint = CGPointMake(0, 0.5);
+        layer.position = CGPointMake(layer.position.x - CGRectGetWidth(textAttribute.rect)/2, layer.position.y);
+        [CATransaction commit];
+
+    }
+}
+
 - (CGRect)animationDrawRectForTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index {
-    
+        //Draw Animation
     if (textAttribute.lineIndex == 0) {
         
         return [self.animateLabel drawRect:self.animateLabel.bounds animationType:CAAnimateLabelZoomType textAttribute:textAttribute];
@@ -164,6 +205,18 @@
 
 - (void)animationAtRect:(CGRect)rect ForTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index {
     
+        //Layer Animation
+    if (self.animateLabel.layerAnimate) {
+        
+    if (textAttribute.lineIndex % 2 == 1) {
+        [self.animateLabel dashAnimationWithTextAttribute:textAttribute];
+    }else {
+    
+        [self.animateLabel spinAnimationWithTextAttribute:textAttribute];
+    }
+    
+    }else {
+        //Draw Animation
     
     if (textAttribute.lineIndex == 0) {
        
@@ -188,6 +241,7 @@
     }else if (textAttribute.lineIndex == 5) {
 
         [self.animateLabel springAnimationRect:rect textAttribute:textAttribute];
+    }
     }
 
 }

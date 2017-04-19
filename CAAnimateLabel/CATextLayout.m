@@ -115,6 +115,7 @@
             UIFont *font = [subLineString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
             
             textAttr.attrString = subLineString;
+            textAttr.initialAttrString = subLineString;
             
             CGFloat startOffset = CTLineGetOffsetForStringIndex(line, enclosingRange.location + lineRange.location, NULL);
             CGFloat endOffset = CTLineGetOffsetForStringIndex(line, enclosingRange.location + enclosingRange.length + lineRange.location, NULL);

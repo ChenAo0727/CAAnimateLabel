@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "CAAnimateLabel"
-  s.version      = "1.2.0"
+  s.version      = "1.3.0"
   s.summary      = "A label can animate and quick custom animation"
 
   s.homepage     = "https://github.com/ChenAo0727/CAAnimateLabel"

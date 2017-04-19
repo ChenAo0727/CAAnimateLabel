@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGRect rect;
 @property (nonatomic, assign) CFIndex lineIndex;
 @property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSAttributedString *initialAttrString;
 @property (nonatomic, copy) NSAttributedString *attrString;
 @property (nonatomic, assign) NSRange range;
 

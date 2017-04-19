@@ -46,6 +46,10 @@ If Yes, set the delay time between last textAttribute complete and next textAttr
  */
 @property (nonatomic, assign) NSInteger repeatCount;
 /**
+ When animation duration or stop
+ */
+@property (nonatomic, assign, readonly) BOOL animating;
+/**
  The textLayout save all textAttribute.
  */
 @property (nonatomic,strong, readonly) CATextLayout *textLayout;
@@ -63,7 +67,7 @@ If Yes, set the delay time between last textAttribute complete and next textAttr
  */
 @property (nonatomic, assign) BOOL restore;
 /**
- CAAnimateLabelDashType CAAnimateLabelSpinType is layer animation.
+ CAAnimateLabelDashType CAAnimateLabelSpinType is layer animation. set Yes to animation on layer
  */
 @property (nonatomic, assign) BOOL layerAnimate;
 
@@ -97,16 +101,25 @@ If Yes, set the delay time between last textAttribute complete and next textAttr
 - (CGRect)drawRect:(CGRect)rect animationType:(CAAnimateLabelType)type textAttribute:(CATextAttribute *)textAttr;
 
 - (void)startAnimation;
+//If restore set YES display initial text ,othersize stop at the current animation state
 - (void)stopAnimationRestore:(BOOL)restore;
 - (void)removeAllTextLayer;
 @end
 
 
 @protocol CAAnimateLabelDelegate <NSObject>
-
+// Called when the animation begins its active duration.
 - (void)animationWillStartTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
+// Called when the animation completes its active duration
 - (void)animationDidEndTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
+
+//Called when layerAnimate is YES
+- (void)prepareLayerByTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
+
+//Reture the animation draw rect
 - (CGRect)animationDrawRectForTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
+
+//Custom layer or draw animation
 - (void)animationAtRect:(CGRect)rect ForTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
 @end
 
