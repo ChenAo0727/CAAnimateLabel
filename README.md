@@ -113,7 +113,7 @@ Conform to CAAnimateLabelDelegate.
 
 ```
 
-##Implementation
+## Implementation
 ```
 - (void)animationWillStartTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index {
 	//call animation start
