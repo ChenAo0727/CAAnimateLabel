@@ -53,23 +53,59 @@ A label can animate and quick custom animation
 
 ### [CocoaPods](http://cocoapods.org)
 
-1.Install the latest release of CocoaPods:
+1.Install the latest release of CocoaPods or update:
 
  ```
  gem install cocoapods
  ```
- 
+  
 2.Add to your Podfile: 
 
 ```
 pod 'CAAnimateLabel'
 ```
 
-3.Install the pod:
+3.Install the pod or update:
 
  ```
  pod install
  ```
+ 
+ ```
+ pod update
+ ```
+ 
+### [Carthage](https://github.com/Carthage/Carthage)
+
+1.Add to your Cartfile:
+
+```
+github "ChenAo0727/CAAnimateLabel"
+```
+2.run `carthage` to build the framework and drag the built `CAAnimatedLabel.framework` into your Xcode project.
+
+```
+carthage update --platform ios
+```
+
+3.On your application targets’ “Build Phases” settings tab, click the “+” icon and choose “New Run Script Phase”. Create a Run Script in which you specify your shell (ex: /bin/sh), add the following contents to the script area below the shell:
+
+```
+/usr/local/bin/carthage copy-frameworks
+```
+
+4.add the paths to the frameworks you want to use under “Input Files”, e.g.:
+
+```
+$(SRCROOT)/Carthage/Build/iOS/CAAnimatedLabel.framework
+```
+
+5.import 
+
+```
+#import <CAAnimatedLabel/CAAnimatedLabel.h>
+```
+
 
 # Usage
 
