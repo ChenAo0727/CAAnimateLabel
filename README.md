@@ -4,7 +4,7 @@
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods](https://img.shields.io/cocoapods/v/CAAnimateLabel.svg?style=flat)](https://github.com/ChenAo0727/CAAnimateLabel)
-[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ibireme/YYCache/master/LICENSE)&nbsp;
+[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ChenAo0727/CAAnimateLabel/master/LICENSE)&nbsp;
 
 A label can animate and quick custom animation 
 
