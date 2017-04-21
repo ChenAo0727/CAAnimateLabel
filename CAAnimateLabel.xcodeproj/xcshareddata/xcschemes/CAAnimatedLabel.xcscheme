@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "38B73CF11EA99F5E003C7499"
-               BuildableName = "CAnimatedLabel.framework"
-               BlueprintName = "CAnimatedLabel"
-               ReferencedContainer = "container:CAnimatedLabel.xcodeproj">
+               BlueprintIdentifier = "385ABAEF1EA9B0B6006927DB"
+               BuildableName = "CAAnimatedLabel.framework"
+               BlueprintName = "CAAnimatedLabel"
+               ReferencedContainer = "container:CAAnimateLabel.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "38B73CF11EA99F5E003C7499"
-            BuildableName = "CAnimatedLabel.framework"
-            BlueprintName = "CAnimatedLabel"
-            ReferencedContainer = "container:CAnimatedLabel.xcodeproj">
+            BlueprintIdentifier = "385ABAEF1EA9B0B6006927DB"
+            BuildableName = "CAAnimatedLabel.framework"
+            BlueprintName = "CAAnimatedLabel"
+            ReferencedContainer = "container:CAAnimateLabel.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "38B73CF11EA99F5E003C7499"
-            BuildableName = "CAnimatedLabel.framework"
-            BlueprintName = "CAnimatedLabel"
-            ReferencedContainer = "container:CAnimatedLabel.xcodeproj">
+            BlueprintIdentifier = "385ABAEF1EA9B0B6006927DB"
+            BuildableName = "CAAnimatedLabel.framework"
+            BlueprintName = "CAAnimatedLabel"
+            ReferencedContainer = "container:CAAnimateLabel.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

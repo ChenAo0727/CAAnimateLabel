@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		385ABAF71EA9B0B6006927DB /* CAAnimatedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385ABAF01EA9B0B6006927DB /* CAAnimatedLabel.framework */; };
+		385ABAF91EA9B0B6006927DB /* CAAnimatedLabel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 385ABAF01EA9B0B6006927DB /* CAAnimatedLabel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		385ABAFD1EA9B159006927DB /* CAAnimateLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3885A91C1E97643900CB9601 /* CAAnimateLabel.m */; };
+		385ABAFE1EA9B159006927DB /* CAAnimateLabel+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AF251E1E9F13AC003B919B /* CAAnimateLabel+Animation.m */; };
+		385ABAFF1EA9B159006927DB /* CATextLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3885A92A1E97840900CB9601 /* CATextLayout.m */; };
+		385ABB001EA9B159006927DB /* CATextAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 3885A92D1E978FF400CB9601 /* CATextAttribute.m */; };
+		385ABB011EA9B159006927DB /* CAAnimateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AF251B1E9E23BD003B919B /* CAAnimateUtil.m */; };
+		385ABB021EA9B16D006927DB /* CAAnimateLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3885A91B1E97643900CB9601 /* CAAnimateLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		385ABB031EA9B16D006927DB /* CAAnimateLabel+Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 38AF251D1E9F13AC003B919B /* CAAnimateLabel+Animation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		385ABB041EA9B16D006927DB /* CATextLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 3885A9291E97840900CB9601 /* CATextLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		385ABB051EA9B16D006927DB /* CATextAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 3885A92C1E978FF400CB9601 /* CATextAttribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		385ABB061EA9B16D006927DB /* CAAnimateUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 38AF251A1E9E23BD003B919B /* CAAnimateUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		385ABB101EA9B24A006927DB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 385ABB0F1EA9B24A006927DB /* Info.plist */; };
+		385ABB111EA9B25D006927DB /* CAAnimatedLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 385ABB0E1EA9B24A006927DB /* CAAnimatedLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3885A9131E973EA700CB9601 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3885A9091E973EA600CB9601 /* AppDelegate.m */; };
 		3885A9141E973EA700CB9601 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3885A90A1E973EA600CB9601 /* Assets.xcassets */; };
 		3885A9151E973EA700CB9601 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3885A90B1E973EA600CB9601 /* LaunchScreen.storyboard */; };
@@ -24,7 +38,34 @@
 		38AF251F1E9F13AC003B919B /* CAAnimateLabel+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AF251E1E9F13AC003B919B /* CAAnimateLabel+Animation.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		385ABAF51EA9B0B6006927DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3885A8E51E973E4900CB9601 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 385ABAEF1EA9B0B6006927DB;
+			remoteInfo = CAAnimatedLabel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		385ABAF81EA9B0B6006927DB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				385ABAF91EA9B0B6006927DB /* CAAnimatedLabel.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		385ABAF01EA9B0B6006927DB /* CAAnimatedLabel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CAAnimatedLabel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		385ABB0E1EA9B24A006927DB /* CAAnimatedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAAnimatedLabel.h; path = Framework/CAAnimatedLabel.h; sourceTree = SOURCE_ROOT; };
+		385ABB0F1EA9B24A006927DB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Framework/Info.plist; sourceTree = SOURCE_ROOT; };
 		3885A8ED1E973E4900CB9601 /* CAAnimateLabel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAAnimateLabel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3885A9081E973EA600CB9601 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3885A9091E973EA600CB9601 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -52,10 +93,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		385ABAEC1EA9B0B6006927DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3885A8EA1E973E4900CB9601 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				385ABAF71EA9B0B6006927DB /* CAAnimatedLabel.framework in Frameworks */,
 				3885A9311E97903D00CB9601 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,11 +112,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		385ABB0D1EA9B22D006927DB /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				385ABB0E1EA9B24A006927DB /* CAAnimatedLabel.h */,
+				385ABB0F1EA9B24A006927DB /* Info.plist */,
+			);
+			name = Framework;
+			path = Demo;
+			sourceTree = "<group>";
+		};
 		3885A8E41E973E4900CB9601 = {
 			isa = PBXGroup;
 			children = (
 				3885A91A1E973EC200CB9601 /* CAAnimateLabel */,
 				3885A9071E973EA600CB9601 /* Demo */,
+				385ABB0D1EA9B22D006927DB /* Framework */,
 				3885A8EE1E973E4900CB9601 /* Products */,
 				3885A92F1E97903D00CB9601 /* Frameworks */,
 			);
@@ -77,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				3885A8ED1E973E4900CB9601 /* CAAnimateLabel.app */,
+				385ABAF01EA9B0B6006927DB /* CAAnimatedLabel.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,7 +188,41 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		385ABAED1EA9B0B6006927DB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				385ABB111EA9B25D006927DB /* CAAnimatedLabel.h in Headers */,
+				385ABB021EA9B16D006927DB /* CAAnimateLabel.h in Headers */,
+				385ABB031EA9B16D006927DB /* CAAnimateLabel+Animation.h in Headers */,
+				385ABB041EA9B16D006927DB /* CATextLayout.h in Headers */,
+				385ABB051EA9B16D006927DB /* CATextAttribute.h in Headers */,
+				385ABB061EA9B16D006927DB /* CAAnimateUtil.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		385ABAEF1EA9B0B6006927DB /* CAAnimatedLabel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 385ABAFA1EA9B0B6006927DB /* Build configuration list for PBXNativeTarget "CAAnimatedLabel" */;
+			buildPhases = (
+				385ABAEB1EA9B0B6006927DB /* Sources */,
+				385ABAEC1EA9B0B6006927DB /* Frameworks */,
+				385ABAED1EA9B0B6006927DB /* Headers */,
+				385ABAEE1EA9B0B6006927DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAAnimatedLabel;
+			productName = CAAnimatedLabel;
+			productReference = 385ABAF01EA9B0B6006927DB /* CAAnimatedLabel.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		3885A8EC1E973E4900CB9601 /* CAAnimateLabel */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3885A9041E973E4A00CB9601 /* Build configuration list for PBXNativeTarget "CAAnimateLabel" */;
@@ -135,10 +230,12 @@
 				3885A8E91E973E4900CB9601 /* Sources */,
 				3885A8EA1E973E4900CB9601 /* Frameworks */,
 				3885A8EB1E973E4900CB9601 /* Resources */,
+				385ABAF81EA9B0B6006927DB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				385ABAF61EA9B0B6006927DB /* PBXTargetDependency */,
 			);
 			name = CAAnimateLabel;
 			productName = CAAnimateLabel;
@@ -154,6 +251,11 @@
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = chenao;
 				TargetAttributes = {
+					385ABAEF1EA9B0B6006927DB = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = P3U8RBA76L;
+						ProvisioningStyle = Automatic;
+					};
 					3885A8EC1E973E4900CB9601 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = P3U8RBA76L;
@@ -175,17 +277,26 @@
 			projectRoot = "";
 			targets = (
 				3885A8EC1E973E4900CB9601 /* CAAnimateLabel */,
+				385ABAEF1EA9B0B6006927DB /* CAAnimatedLabel */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		385ABAEE1EA9B0B6006927DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3885A8EB1E973E4900CB9601 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3885A9171E973EA700CB9601 /* Info.plist in Resources */,
 				3885A9161E973EA700CB9601 /* Main.storyboard in Resources */,
+				385ABB101EA9B24A006927DB /* Info.plist in Resources */,
 				3885A9221E977AD600CB9601 /* AnimateViewController.xib in Resources */,
 				3885A9141E973EA700CB9601 /* Assets.xcassets in Resources */,
 				3885A9151E973EA700CB9601 /* LaunchScreen.storyboard in Resources */,
@@ -195,6 +306,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		385ABAEB1EA9B0B6006927DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				385ABAFD1EA9B159006927DB /* CAAnimateLabel.m in Sources */,
+				385ABAFE1EA9B159006927DB /* CAAnimateLabel+Animation.m in Sources */,
+				385ABAFF1EA9B159006927DB /* CATextLayout.m in Sources */,
+				385ABB001EA9B159006927DB /* CATextAttribute.m in Sources */,
+				385ABB011EA9B159006927DB /* CAAnimateUtil.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3885A8E91E973E4900CB9601 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -212,6 +335,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		385ABAF61EA9B0B6006927DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 385ABAEF1EA9B0B6006927DB /* CAAnimatedLabel */;
+			targetProxy = 385ABAF51EA9B0B6006927DB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3885A90B1E973EA600CB9601 /* LaunchScreen.storyboard */ = {
@@ -233,6 +364,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		385ABAFB1EA9B0B6006927DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = P3U8RBA76L;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Framework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Apple.CAAnimatedLabel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		385ABAFC1EA9B0B6006927DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = P3U8RBA76L;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Framework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Apple.CAAnimatedLabel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		3885A9021E973E4A00CB9601 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -350,6 +525,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		385ABAFA1EA9B0B6006927DB /* Build configuration list for PBXNativeTarget "CAAnimatedLabel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				385ABAFB1EA9B0B6006927DB /* Debug */,
+				385ABAFC1EA9B0B6006927DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		3885A8E81E973E4900CB9601 /* Build configuration list for PBXProject "CAAnimateLabel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
