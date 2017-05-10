@@ -53,6 +53,12 @@ If Yes, set the delay time between last textAttribute complete and next textAttr
  The textLayout save all textAttribute.
  */
 @property (nonatomic,strong, readonly) CATextLayout *textLayout;
+
+/**
+ Set animateRange to animate part of the label.
+ */
+@property (nonatomic, assign) NSRange animateRange;
+
 /**
  The delegate provide some methods for customized animation
  */
@@ -108,6 +114,8 @@ If Yes, set the delay time between last textAttribute complete and next textAttr
 
 
 @protocol CAAnimateLabelDelegate <NSObject>
+//Prepare All Text Attributes change text attribute animate or not. ignore animateRange
+- (void)prepareTextAttributes:(NSMutableArray <CATextAttribute *>*)textAttrs;
 // Called when the animation begins its active duration.
 - (void)animationWillStartTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index;
 // Called when the animation completes its active duration

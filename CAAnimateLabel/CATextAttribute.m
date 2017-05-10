@@ -29,6 +29,13 @@
 @end
 
 @implementation CATextAttribute
+- (instancetype)init {
+    if (self = [super init]) {
+        self.animate = YES;
+    }
+    return self;
+}
+
 - (void)setAttrString:(NSAttributedString *)attrString {
     _attrString = attrString;
     _font = [attrString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];

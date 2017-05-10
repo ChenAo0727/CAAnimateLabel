@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger,CATextAlignment) {
 @property (nonatomic, assign) BOOL layerAnimate;
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, strong) NSMutableArray <CATextAttribute *>*textAttrs;
+
+@property (nonatomic, assign) NSInteger animateCount;
 - (void)cleanTextAttrsbute;
 
 - (void)proccessAttributeString:(NSAttributedString *)attrString type:(CATextLayoutType)type rect:(CGRect)rect;

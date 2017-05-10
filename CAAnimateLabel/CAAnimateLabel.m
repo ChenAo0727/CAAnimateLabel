@@ -22,6 +22,7 @@
     CAAnimateLabelType _initialType;
 }
 
+@property (nonatomic, strong) NSMutableArray *animateTextAttrs;
 @end
 
 @implementation CAAnimateLabel
@@ -77,6 +78,21 @@
     return _textLayout;
 }
 
+- (NSMutableArray *)animateTextAttrs {
+    if (_animateTextAttrs == nil) {
+        _animateTextAttrs = [NSMutableArray array];
+        
+    }else {
+        [_animateTextAttrs removeAllObjects];
+    }
+    [_textLayout.textAttrs enumerateObjectsUsingBlock:^(CATextAttribute * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.animate) {
+            [_animateTextAttrs addObject:obj];
+        }
+    }];
+    return _animateTextAttrs;
+}
+
 - (BOOL)animating {
     return !_link.paused;
 }
@@ -114,7 +130,6 @@
 
 - (void)setDelegate:(id<CAAnimateLabelDelegate>)delegate {
     _delegate = delegate;
-    _type = CAAnimateLabelCustomType;
     [self _updateText];
 }
 
@@ -250,13 +265,36 @@
     [self preTextAttributes];
     [self updateTotalDuration];
     [_textLayout adjustRect:self.textAlignment];
+    
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(prepareTextAttributes:)]) {
+        [self.delegate prepareTextAttributes:_textLayout.textAttrs];
+        [self updateTotalDuration];
+    }else {
+        if (!NSEqualRanges(self.animateRange, NSMakeRange(0, 0))) {
+            [self.animateTextAttrs removeAllObjects];
+            [_textLayout.textAttrs enumerateObjectsUsingBlock:^(CATextAttribute * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                NSInteger location = 0;
+                for (NSInteger i = 0; i < idx; i++) {
+                    location += _textLayout.textAttrs[i].text.length;
+                }
+                if (NSLocationInRange(location, self.animateRange) && (location + obj.text.length) <= self.animateRange.location + self.animateRange.length) {
+                    obj.animate = YES;
+                }else {
+                    obj.animate = NO;
+                }
+            }];
+            [self updateTotalDuration];
+        }
+    }
 }
 
 - (void)updateTotalDuration {
     if (_delayAfterComplete) {
-        _totalDuration = MAX(_textLayout.textAttrs.count - 1, 0) * self.delay + self.duration * _textLayout.textAttrs.count;
+        _totalDuration = MAX(_textLayout.animateCount - 1, 0) * self.delay + self.duration * _textLayout.textAttrs.count;
     }else {
-        _totalDuration = MAX(_textLayout.textAttrs.count - 1, 0) * self.delay + self.duration;
+        _totalDuration = MAX(_textLayout.animateCount - 1, 0) * self.delay + self.duration;
     }
 
 }
@@ -330,18 +368,18 @@
     }else {
         i = _passTime / self.delay;
     }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(animationWillStartTextAttribute:forIndex:)] && i < _textLayout.textAttrs.count && i >= _animatedAttribute.count) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(animationWillStartTextAttribute:forIndex:)] && i < self.animateTextAttrs.count && i >= _animatedAttribute.count) {
         [_animatedAttribute addObject:@(i)];
-        [self.delegate animationWillStartTextAttribute:[_textLayout.textAttrs objectAtIndex:i] forIndex:i];
+        [self.delegate animationWillStartTextAttribute:[self.animateTextAttrs objectAtIndex:i] forIndex:i];
     }
     
     if (_passTime >= self.duration) {
         
         NSInteger completeIndex = (_passTime - self.duration) / (_delayAfterComplete ? (self.delay + self.duration) : self.delay);
         
-        if (self.delegate && [self.delegate respondsToSelector:@selector(animationDidEndTextAttribute:forIndex:)] && completeIndex < _textLayout.textAttrs.count && completeIndex >= _completeAnimateAttribute.count) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(animationDidEndTextAttribute:forIndex:)] && completeIndex < self.animateTextAttrs.count && completeIndex >= _completeAnimateAttribute.count) {
             [_completeAnimateAttribute addObject:@(completeIndex)];
-            [self.delegate animationDidEndTextAttribute:[_textLayout.textAttrs objectAtIndex:completeIndex] forIndex:completeIndex];
+            [self.delegate animationDidEndTextAttribute:[self.animateTextAttrs objectAtIndex:completeIndex] forIndex:completeIndex];
         }
     }
     
@@ -382,7 +420,9 @@
         }
     }
     
-    [_textLayout.textAttrs enumerateObjectsUsingBlock:^(CATextAttribute * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.animateTextAttrs enumerateObjectsUsingBlock:^(CATextAttribute * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        
         NSTimeInterval timePass;
         if (_delayAfterComplete) {
             timePass = _passTime - idx * (self.delay + self.duration);
@@ -458,7 +498,12 @@
                 [obj.initialAttrString drawInRect:obj.rect];
             }
         }else {
-            [self drawInRect:rect withTextAttribute:obj forIndex:idx];
+            if (obj.animate) {
+                
+                [self drawInRect:rect withTextAttribute:obj forIndex:idx];
+            }else {
+                [obj.initialAttrString drawInRect:obj.rect];
+            }
         
         }
     }];

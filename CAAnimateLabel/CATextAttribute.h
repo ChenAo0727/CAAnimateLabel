@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat progress;
 @property (nonatomic, assign) BOOL complete;
 
+@property (nonatomic, assign) BOOL animate;
+
 @end
 
 

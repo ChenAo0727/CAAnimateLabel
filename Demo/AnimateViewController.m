@@ -52,6 +52,10 @@
     self.animateLabel.duration = 3.0;
     self.animateLabel.delay = 0.5;
     self.animateLabel.repeatCount = 2;
+    
+    //animate part of label will be ignore if implement prepareTextAttributes
+    self.animateLabel.animateRange = NSMakeRange(10, 10);
+    
     self.animateLabel.text = @"青春，是人生中最美的风景。\n青春，是一场花开的遇见；\n青春，是一场痛并快乐着的旅行；\n青春，是一场轰轰烈烈的比赛；\n青春，是一场鲜衣奴马的争荣岁月；\n青春，是一场风花雪月的光阴。";
     self.animateLabel.contentInsets = UIEdgeInsetsMake(100, 10, 10, 10);
     if (self.animateType == CAAnimateLabelCustomType) {
@@ -113,6 +117,8 @@
     if (self.animateLabel.type == CAAnimateLabelCustomType) {
         self.animateLabel.layerAnimate = !self.animateLabel.layerAnimate;
     }
+    NSMutableArray <CATextAttribute *>*textAttr = self.animateLabel.textLayout.textAttrs;
+    textAttr[0].animate = NO;
     [self.animateLabel startAnimation];
 }
 
@@ -137,6 +143,14 @@
 
 
 #pragma mark - CAAnimateLabelDelegate
+- (void)prepareTextAttributes:(NSMutableArray<CATextAttribute *> *)textAttrs {
+    for (CATextAttribute *attr in textAttrs) {
+        if (attr.lineIndex % 2 == 1) {
+            attr.animate = NO;
+        }
+    }
+}
+
 - (void)animationWillStartTextAttribute:(CATextAttribute *)textAttribute forIndex:(NSInteger)index {
     NSLog(@"%@ will start animation at index %ld",textAttribute.text,index);
 }

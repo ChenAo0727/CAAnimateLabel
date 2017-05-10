@@ -25,6 +25,16 @@
     return _textAttrs;
 }
 
+- (NSInteger)animateCount {
+    NSInteger animateCount = 0;
+    for (CATextAttribute *textAttr in self.textAttrs) {
+        if (textAttr.animate) {
+            animateCount ++;
+        }
+    }
+    return animateCount;
+}
+
 - (void)proccessAttributeString:(NSAttributedString *)attrString type:(CATextLayoutType)type rect:(CGRect)rect
 {
     
